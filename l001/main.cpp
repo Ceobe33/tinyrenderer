@@ -1,4 +1,4 @@
-#include <iostream>
+#include <cmath>
 
 #include "tgaimage.h"
 
@@ -19,8 +19,8 @@ void line(int x0, int y0, int x1, int y1, TGAImage& image, TGAColor color) {
 
 int main(int argc, char** argv) {
     TGAImage image(200, 200, TGAImage::RGB);
-    image.set(0, 0, red);
-    for (int i = 0; i < 1000000; i++) {
+    // image.set(0, 0, red);
+    for (int i = 0; i < 10000000; i++) {
         line(13, 20, 80, 40, image, white);
         line(20, 13, 40, 80, image, red);
         line(80, 40, 13, 20, image, red);
@@ -36,6 +36,18 @@ int main(int argc, char** argv) {
      *  install gprof2dot over https://github.com/jrfonseca/gprof2dot.git
      *  -w is show function name for involke
      *  `$ gprof a.out gmon.out | gprof2dot.py -w | dot -Tpng -o output.png`
+     *
+     * g++ -pg -g -ggdb -O0 main.cpp tgaimage.h tgaimage.cpp gprof_helper.so
+     *
+     * Error
+     * `$ cc -o main.cpp tgaimage.h tgaimage.cpp -g -pg`
+     * tgaimage.h:4:10: fatal error: fstream: No such file or directory
+     *     4 | #include <fstream>
+
+     *
+     *  generate threads
+     * helper(https://blog.csdn.net/stanjiang2010/article/details/5655143)
+     *  `$ gcc -shared -fPIC gprof_helper.c -o gprof_helper.so -lpthread -ldl`
      */
     return 0;
 }
