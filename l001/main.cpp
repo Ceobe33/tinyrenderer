@@ -1,5 +1,6 @@
 #include <cmath>
 
+#include "../cppModules/profiler.cpp"
 #include "tgaimage.h"
 
 const TGAColor white = TGAColor(255, 255, 255, 255);
@@ -18,6 +19,7 @@ void line(int x0, int y0, int x1, int y1, TGAImage& image, TGAColor color) {
 }
 
 int main(int argc, char** argv) {
+    PROFILE_FUNCTION();
     TGAImage image(200, 200, TGAImage::RGB);
     // image.set(0, 0, red);
     for (int i = 0; i < 10000000; i++) {
