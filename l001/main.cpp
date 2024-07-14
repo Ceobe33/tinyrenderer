@@ -21,8 +21,8 @@ void line(int x0, int y0, int x1, int y1, TGAImage& image, TGAColor color) {
 int main(int argc, char** argv) {
     PROFILE_FUNCTION();
     TGAImage image(200, 200, TGAImage::RGB);
-    // image.set(0, 0, red);
-    for (int i = 0; i < 10000000; i++) {
+    image.set(0, 0, red);
+    for (int i = 0; i < 1 000 000; i++) {
         line(13, 20, 80, 40, image, white);
         line(20, 13, 40, 80, image, red);
         line(80, 40, 13, 20, image, red);
@@ -35,8 +35,8 @@ int main(int argc, char** argv) {
      * gprof website https://sourceware.org/binutils/docs/gprof/
      *  `$ g++ -O0 -pg main.cpp tgaimage.h tgaimage.cpp`
      *    to generate a.out file, then `$ ./a.out` to generate gmon.out
-     *  install gprof2dot over https://github.com/jrfonseca/gprof2dot.git
      *  -w is show function name for involke
+     *  install gprof2dot over https://github.com/jrfonseca/gprof2dot.git
      *  `$ gprof a.out gmon.out | gprof2dot.py -w | dot -Tpng -o output.png`
      *
      * g++ -pg -g -ggdb -O0 main.cpp tgaimage.h tgaimage.cpp gprof_helper.so
