@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
     PROFILE_FUNCTION();
     TGAImage image(200, 200, TGAImage::RGB);
     image.set(0, 0, red);
-    for (int i = 0; i < 1 000 000; i++) {
+    for (int i = 0; i < 1000000; i++) {
         line(13, 20, 80, 40, image, white);
         line(20, 13, 40, 80, image, red);
         line(80, 40, 13, 20, image, red);

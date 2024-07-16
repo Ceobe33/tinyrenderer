@@ -3,3 +3,5 @@
 # *.png
 *.tga
 *.Identifier
+*.o
+*.d
