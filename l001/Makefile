@@ -6,6 +6,7 @@ LIBS		 = -lm
 DESTDIR		= ./
 BUILD_DIR	= ./build
 TARGET  	= a.out
+GPROF2DOT 	= /home/aaron/gprof2dot/gprof2dot.py
 
 # OBJECTS := $(patsubst %.cpp,%.o,$(wildcard *.cpp))
 SRCS = $(wildcard *.cpp)
@@ -30,7 +31,7 @@ $(DESTDIR)$(TARGET): $(OBJECTS)
 	$(SYSCONF_LINK) -ggdb -pg -O0 -o $@ $^
 	./$@
 	gprof $@ gmon.out -Q
-	# gprof $@ gmon.out | gprof2dot -w | dot -Tpng -o output.png
+	# gprof $@ gmon.out | $(GPROF2DOT) -w | dot -Tpng -o output.png
 
 %.d: %.cpp
 	rm -f $@; \
