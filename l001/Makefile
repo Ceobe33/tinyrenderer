@@ -1,4 +1,4 @@
-SYSCONF_LINK = g++
+CC = g++ -ggdb -pg -O0
 CPPFLAGS	 =
 LDFLAGS		 =
 LIBS		 = -lm
@@ -8,7 +8,10 @@ BUILD_DIR	= ./build
 TARGET  	= a.out
 GPROF2DOT 	= /home/aaron/gprof2dot/gprof2dot.py
 
+# $(patsubst pattern, replacement, text)
+# finds words in text that match with pattern and replace then use replacement
 # OBJECTS := $(patsubst %.cpp,%.o,$(wildcard *.cpp))
+
 SRCS = $(wildcard *.cpp)
 OBJECTS = $(SRCS:.cpp=.o)
 DEPS = $(SRCS:.cpp=.d)
@@ -19,33 +22,33 @@ DEPS = $(SRCS:.cpp=.d)
 # all: $(DESTDIR)$(TARGET)
 #
 # $(DESTDIR)$(TARGET): $(OBJECTS)
-	# $(SYSCONF_LINK) -Wall $(LDFLAGS) -o $(DESTDIR)$(TARGET) $(OBJECTS) $(LIBS)
+	# $(CC) -Wall $(LDFLAGS) -o $(DESTDIR)$(TARGET) $(OBJECTS) $(LIBS)
 #
 # $(OBJECTS): %.o: %.cpp
-# 	$(SYSCONF_LINK) -Wall $(CPPFLAGS) -c $(CFLAGS) $< -o $@
+# 	$(CC) -Wall $(CPPFLAGS) -c $(CFLAGS) $< -o $@
 
 # 默认目标
 # all: $(DESTDIR)$(TARGET)
 
 $(DESTDIR)$(TARGET): $(OBJECTS)
-	$(SYSCONF_LINK) -ggdb -pg -O0 -o $@ $^
+	$(CC) -Wall -o $@ $^
 	./$@
 	gprof $@ gmon.out -Q
 	# gprof $@ gmon.out | $(GPROF2DOT) -w | dot -Tpng -o output.png
 
-%.d: %.cpp
-	rm -f $@; \
-	$(SYSCONF_LINK) -MM $< >$@.tmp; \
-	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.tmp > $@; \
-	rm -f $@.tmp
+# %.d: %.cpp
+# 	@set -e; rm -f $@; \
+# 	$(CC) -M $(CPPFLAGS) $< >$@.$$$$; \
+# 	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
+# 	rm -f $@.$$$$
 
 
-tgaimage.o: tgaimage.cpp tgaimage.h
-	$(SYSCONF_LINK) -c tgaimage.cpp tgaimage.h
+# tgaimage.o: tgaimage.cpp tgaimage.h
+# 	$(CC) -c tgaimage.cpp tgaimage.h
 
 # 模式规则
-%.o: %.cpp %.h
-	$(SYSCONF_LINK) -c -o $@ $<
+# %.o: %.cpp %.h
+# 	$(CC) -c -o $@ $<
 
 # a.out: main.o tgaimage.o
 # 	g++ -o a.out main.o tgaimage.o
