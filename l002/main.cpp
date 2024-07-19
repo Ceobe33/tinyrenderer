@@ -14,14 +14,19 @@ const int width = 800;
 const int height = 800;
 
 void line(int x0, int y0, int x1, int y1, TGAImage& image, TGAColor color) {
+    bool isSteep = false;
     if (x0 > x1) {
         std::swap(x0, x1);
         std::swap(y0, y1);
+        isSteep = true;
     }
     for (int x = x0; x <= x1; x++) {
         float t = (x - x0) / (float)(x1 - x0);
         int y = y0 * (1. - t) + y1 * t;
-        image.set(x, y, color);
+        if (isSteep)
+            image.set(y, x, color);
+        else
+            image.set(x, y, color);
     }
 }
 
@@ -59,6 +64,8 @@ int main(int argc, char** argv) {
 
     TGAImage image(width, height, TGAImage::RGB);
     triangle(Vec2i(10, 10), Vec2i(35, 25), Vec2i(30, 81), image, white);
+    triangle(Vec2i(300, 710), Vec2i(350, 25), Vec2i(100, 100), image, white);
+    triangle(Vec2i(500, 710), Vec2i(550, 225), Vec2i(700, 200), image, white);
     for (int i = 0; i < model->nfaces(); i++) {
         std::vector<int> face = model->face(i);
         for (int j = 0; j < 3; j++) {
@@ -68,7 +75,7 @@ int main(int argc, char** argv) {
             int y0 = (v0.y + 1.) * height / 2.;
             int x1 = (v1.x + 1.) * width / 2.;
             int y1 = (v1.y + 1.) * height / 2.;
-            line(x0, y0, x1, y1, image, white);
+            // line(x0, y0, x1, y1, image, white);
         }
     }
 

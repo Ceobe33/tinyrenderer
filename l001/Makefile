@@ -33,14 +33,14 @@ DEPS = $(SRCS:.cpp=.d)
 $(DESTDIR)$(TARGET): $(OBJECTS)
 	$(CC) -Wall -o $@ $^
 	./$@
-	gprof $@ gmon.out -Q
+	gprof $@ gmon.out -b
 	# gprof $@ gmon.out | $(GPROF2DOT) -w | dot -Tpng -o output.png
 
-# %.d: %.cpp
-# 	@set -e; rm -f $@; \
-# 	$(CC) -M $(CPPFLAGS) $< >$@.$$$$; \
-# 	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
-# 	rm -f $@.$$$$
+%.d: %.cpp
+	@set -e; rm -f $@; \
+	$(CC) -M $(CPPFLAGS) $< >$@.$$$$; \
+	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
+	rm -f $@.$$$$
 
 
 # tgaimage.o: tgaimage.cpp tgaimage.h
