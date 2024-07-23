@@ -44,15 +44,14 @@ void line(Vec2i t0, Vec2i t1, TGAImage& image, TGAColor color) {
     line(x0, y0, x1, y1, image, color);
 }
 
-void triangle(Vec2i t0, Vec2i t1, Vec2i t2, TGAImage& image,
-              TGAColor color = white) {
+void triangle(Vec2i t0, Vec2i t1, Vec2i t2, TGAImage& image, TGAColor color) {
     // sort the vertices, lower to upper, bubble-sort
     if (t0.y > t1.y) std::swap(t0, t1);
     if (t0.y > t2.y) std::swap(t0, t2);
     if (t1.y > t2.y) std::swap(t1, t2);
-    line(t0, t1, image, color);
-    line(t1, t2, image, color);
-    line(t2, t0, image, color);
+    line(t0, t1, image, green);
+    line(t1, t2, image, green);
+    line(t2, t0, image, red);
 }
 
 int main(int argc, char** argv) {
@@ -64,9 +63,17 @@ int main(int argc, char** argv) {
     }
 
     TGAImage image(width, height, TGAImage::RGB);
-    triangle(Vec2i(10, 10), Vec2i(35, 25), Vec2i(30, 81), image);
-    triangle(Vec2i(300, 710), Vec2i(350, 25), Vec2i(100, 100), image, green);
-    triangle(Vec2i(500, 710), Vec2i(550, 225), Vec2i(700, 200), image, red);
+    triangle(Vec2i(10, 10), Vec2i(35, 25), Vec2i(30, 81), image, white);
+    triangle(Vec2i(300, 710), Vec2i(350, 25), Vec2i(100, 100), image, white);
+    triangle(Vec2i(500, 710), Vec2i(550, 225), Vec2i(700, 200), image, white);
+
+    line(100, 100, 300, 0, image, white);
+    line(100, 100, 400, 100, image, white);
+    line(100, 100, 400, 400, image, white);
+    line(100, 700, 100, 100, image, white);
+    line(0, 600, 100, 100, image, white);
+    line(0, 200, 100, 100, image, white);
+    line(0, 100, 100, 100, image, white);
     for (int i = 0; i < model->nfaces(); i++) {
         std::vector<int> face = model->face(i);
         for (int j = 0; j < 3; j++) {

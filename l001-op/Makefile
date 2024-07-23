@@ -30,6 +30,7 @@ DEPS = $(SRCS:.cpp=.d)
 # 默认目标
 # all: $(DESTDIR)$(TARGET)
 
+#//TODO:  fix no time accumulated
 $(DESTDIR)$(TARGET): $(OBJECTS)
 	$(CC) -Wall -o $@ $^
 	./$@
